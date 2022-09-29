@@ -1,0 +1,9 @@
+{
+    "require": {
+        "propel/propel": "~2.0@dev",
+        "nesbot/carbon": "^2.62"
+    },
+    "autoload": {
+        "classmap": ["models/"]
+      }
+}
