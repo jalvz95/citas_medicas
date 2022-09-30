@@ -48,11 +48,12 @@
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label for="nombre">Medicos Disponibles</label>
-                                <select class="form-select">
+                                <select name="medico" class="form-select">
                                     <option selected disabled>Selecciona un medico</option>
-                                    <option value="1">Jose Alvarez</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    <?php foreach(obtenerMedicos() as $medico): ?>
+                                    <option value="<?php echo $medico->getId()?>"><?php echo $medico->getNombre()?></option>
+                                    <?php endforeach ?>
+                                    
                                 </select>
                             </div>
                         </div>
@@ -60,7 +61,7 @@
                     <hr>
                     <div class="row">
                         <div class="col-md-12 d-flex justify-content-end">
-                            <input class="btn btn btn-primary" type="button" name="submit" value="Guardar Cita">
+                            <input class="btn btn btn-primary" type="submit" name="submit" value="Guardar Cita">
                         </div>
                     </div>
                     </form>

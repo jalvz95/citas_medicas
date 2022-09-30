@@ -13,8 +13,8 @@
 
                 <?php for($i=1; $i<=$n_paginas; $i++):?>
                     <?php if(pagina_actual() === $i):?>
-                        <li class="page-item active">
-                        <a class="page-link bg-dark bg-gradient text-white paginacion" href="?p=<?php echo $i;?>"><?php echo $i;?></a>
+                        <li class="page-item">
+                        <a class="page-link bg-dark bg-gradient text-white paginacion active_paginacion" href="?p=<?php echo $i;?>"><?php echo $i;?></a>
                         </li>
                     <?php else:?>
                         <li class="page-item ">

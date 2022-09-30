@@ -1,6 +1,7 @@
 <?php
 
 use DB\Base\CitasQuery;
+use DB\Base\MedicosQuery;
 use DB\Base\PacientesQuery;
 
 function limpiarDatos($datos){
@@ -17,6 +18,7 @@ function pagina_actual(){
 function obtenerCitas(){
      $inicio = (pagina_actual() > 1) ? pagina_actual() * 5 - 5 : 0;
     $citas= CitasQuery::create()
+    ->orderByEstatus('ASC')
     ->orderByFecha('ASC')
     ->leftJoinWith('Citas.Pacientes')
     ->leftJoinWith('Citas.Medicos')
@@ -24,6 +26,12 @@ function obtenerCitas(){
     ->offset($inicio)
     ->find();
     return $citas;
+}
+
+function obtenerMedicos(){
+    $medicos= MedicosQuery::create()
+    ->find();
+    return $medicos;
 }
 
 function obternerPacientes(){
