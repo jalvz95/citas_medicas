@@ -41,8 +41,8 @@ use Carbon\Carbon;
                             <td><?php echo $cita->getMedicos()->getEspecialidad()?></td>
                             <td><?php $status= $cita->getEstatus(); echo $status == 1 ? 'Atendido' : 'Sin Atender' ?></td>
                             <td>
-                                <a href="../admin/editar.php" class="btn btn-primary" title="Editar"><i class="fa-solid fa-file-pen"></i></a>
-                                <a href="#" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                                <a href="../admin/editar.php?id=<?php echo $cita->getId();?>" class="btn btn-primary" title="Editar"><i class="fa-solid fa-file-pen"></i></a>
+                                <a href="../admin/eliminar.php?id=<?php echo $cita->getId();?>" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
                                 <?php $status == 1 ? 'disabled':'' ;
                                 if($status == 0):?>
                                 <a href="#" class="btn btn-success"><i class="fa-solid fa-check-to-slot"></i></a>
