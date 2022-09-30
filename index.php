@@ -12,4 +12,5 @@ require_once 'generated-conf/config.php';
 //////////////////////////////////////////////
 
 require 'functions.php';
+
 ?>

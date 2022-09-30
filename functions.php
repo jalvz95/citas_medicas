@@ -46,8 +46,12 @@ function cantidad_paginas(){
 }
 
 function id_cita($id){
-    $q=CitasQuery::create()->findOneById($id);
-    return (int)limpiarDatos($q->getId());
+    $id=(int)limpiarDatos($id);
+    return CitasQuery::create()
+    ->leftJoinWith('Citas.Pacientes')
+    ->leftJoinWith('Citas.Medicos')
+    ->findOneById($id);
+    
 }
 
 ?>

@@ -8,6 +8,7 @@ $borrar= CitasQuery::create()
 ->filterById($id)
 ->delete();
 
-header('location: admin.index.php');
+
+header("location: admin.index.php?p=".$_GET['p']);
 
 ?>
