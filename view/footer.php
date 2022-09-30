@@ -16,6 +16,7 @@
   </footer>
   </div>
   <script src="https://kit.fontawesome.com/187fea232c.js" crossorigin="anonymous"></script>
+  <script src="../js/bootstrap.bundle.min.js"></script>
   <style>
     footer{
         position: absolute;

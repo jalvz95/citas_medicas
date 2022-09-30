@@ -11,8 +11,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $apellido= limpiarDatos($_POST['apellido']);
     $hora= limpiarDatos($_POST['hora']);
     $fecha= limpiarDatos($_POST['fecha']);
-    $medico= limpiarDatos($_POST['medico']);
 
+    if(!empty($_POST['medico'])) {
+        $medico= limpiarDatos($_POST['medico']);
+    }else{
+        $medico= null;
+    }
+
+    require 'validaciones.php';
+
+    if($errores==''){
     $statement= new Pacientes();
     $statement->setNombreP($nombre);
     $statement->setApellidoP($apellido);
@@ -28,6 +36,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $cita->save();
 
     header('location: admin.index.php');
+    }    
 }
 
 require '../view/formulario.view.php';

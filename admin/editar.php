@@ -18,17 +18,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $idCita= limpiarDatos($_POST['idCita']);
     $idPaciente= limpiarDatos($_POST['idPaciente']);
 
-   PacientesQuery::create()
-   ->filterById($idPaciente)
-   ->update(array('NombreP'=>$nombre,'ApellidoP'=>$apellido));
+    require 'validaciones.php';
+    if($errores==''){
+        PacientesQuery::create()
+        ->filterById($idPaciente)
+        ->update(array('NombreP'=>$nombre,'ApellidoP'=>$apellido));
 
-   CitasQuery::create()
-   ->filterById($idCita)
-    ->update(array('Hora'=>$hora,'Fecha'=>$fecha,'IdMedico'=>$medico,'Estatus'=>$estatus));
-    
-    header('location: admin.index.php');
-
+        CitasQuery::create()
+        ->filterById($idCita)
+            ->update(array('Hora'=>$hora,'Fecha'=>$fecha,'IdMedico'=>$medico,'Estatus'=>$estatus));
+            
+            header('location: admin.index.php');
+    }
+        $cita= id_cita($idCita);
 }else{
+
     $cita= id_cita($_GET['id']);
     if(empty($cita->getId())){
         header('location: admin.index.php');

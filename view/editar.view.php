@@ -44,7 +44,7 @@ use Carbon\Carbon;
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="nombre">Fecha</label>
-                                    <input type="date" name="fecha" class="form-control" id="fecha" placeholder="Fecha" value="<?php $fecha=new Carbon($cita->getFecha()); echo  $fecha->format('Y-m-d')?>">
+                                    <input type="date" name="fecha" class="form-control" id="fecha" placeholder="Fecha" value="<?php $fecha=new Carbon($cita->getFecha()); echo  $fecha->format('Y-m-d');?>">
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -82,11 +82,19 @@ use Carbon\Carbon;
                             </div>
                         </div>
                         <hr>
-                    <div class="row">
-                        <div class="col-md-12 d-flex justify-content-end">
-                            <input class="btn btn btn-primary" type="submit" name="submit" value="Editar Cita">
+                        <div class="row">
+                            <div class="col-md-9 d-flex justify-content-center">
+                                <?php if (!empty($errores)):?>
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Epa Panita!</strong> <?php echo $errores?>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                <?php endif ?>
+                            </div>
+                                <div class="col-md-3 d-flex align-items-center justify-content-end">
+                                    <input class="btn btn btn-primary" type="submit" name="submit" value="Editar Cita">
+                            </div>
                         </div>
-                    </div>
                     </form>
                 </div>
             </div>

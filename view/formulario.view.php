@@ -18,13 +18,13 @@
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label for="nombre">Nombre</label>
-                                <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre">
+                                <input required type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre">
                             </div>
                         </div>
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label for="apellido">Apellido</label>
-                                <input type="text" name="apellido" class="form-control" id="apellido" placeholder="Apellido">
+                                <input required type="text" name="apellido" class="form-control" id="apellido" placeholder="Apellido">
                             </div>
                         </div>
                     </div>
@@ -36,13 +36,13 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for="nombre">Hora</label>
-                                <input type="time" name="hora" class="form-control" id="hora" placeholder="hora">
+                                <input required type="time" name="hora" class="form-control" id="hora" placeholder="hora">
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for="nombre">Fecha</label>
-                                <input type="date" name="fecha" class="form-control" id="fecha" placeholder="Fecha">
+                                <input required type="date" name="fecha" class="form-control" id="fecha" placeholder="Fecha">
                             </div>
                         </div>
                         <div class="col-md-5">
@@ -60,9 +60,19 @@
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-md-12 d-flex justify-content-end">
+                    <div class="col-md-9 d-flex justify-content-center">
+                        <?php if (!empty($errores)):?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Epa Panita!</strong> <?php echo $errores?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <?php endif ?>
+                        </div>
+                        <div class="col-md-3 d-flex align-items-center justify-content-end">
                             <input class="btn btn btn-primary" type="submit" name="submit" value="Guardar Cita">
                         </div>
+                        
+
                     </div>
                     </form>
                 </div>
