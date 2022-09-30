@@ -24,5 +24,6 @@ return array(
     'Psr\\Log\\' => array($vendorDir . '/psr/log/src'),
     'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
     'Propel\\' => array($vendorDir . '/propel/propel/src/Propel'),
+    'Kint\\' => array($vendorDir . '/kint-php/kint/src'),
     'Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
 );

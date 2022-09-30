@@ -1,7 +1,8 @@
 {
     "require": {
         "propel/propel": "~2.0@dev",
-        "nesbot/carbon": "^2.62"
+        "nesbot/carbon": "^2.62",
+        "kint-php/kint": "^4.2"
     },
     "autoload": {
         "classmap": ["models/"]

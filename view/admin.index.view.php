@@ -1,4 +1,7 @@
-<?php require 'header.php'?>
+<?php require 'header.php'; 
+use Carbon\Carbon;
+
+?>
 
     <div class="container">
         <div class="row">
@@ -11,7 +14,7 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <table class="table table-dark table-hover border">
+            <table class="table table-dark table-hover table-bordered">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -26,43 +29,35 @@
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
-                    <tr>
-                        <td scope=col>1</td>
-                        <td>Jose</td>
-                        <td>Alvarez</td>
-                        <td>28/9/2022</td>
-                        <td>16:00</td>
-                        <td>Jose Alvarez</td>
-                        <td>Otorrino</td>
-                        <?php $status= 0; $estado_cita= $status == 1 ? 'Atendido' : 'Sin Atender' ?>
-                        <td><?php echo $estado_cita?></td>
-                        <td>
-                            <a href="#" class="btn btn-primary">Editar</a>
-                            <a href="#" class="btn btn-danger">Eliminar</a>
-                            <?php $status= 0; $disable= $status == 1 ? 'disabled':'' ?>
-                            <a href="#" class="btn btn-outline-success <?php echo $disable ?>">Atendido</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Jose</td>
-                        <td>Alvarez</td>
-                        <td>28/9/2022</td>
-                        <td>16:00</td>
-                        <td>Jose Alvarez</td>
-                        <td>Odontologia</td>
-                        <td>Paciente atendido</td>
-                        <td>
-                            <a href="#" class="btn btn-primary">Editar</a>
-                            <a href="#" class="btn btn-danger">Eliminar</a>
-                            <a href="#" class="btn btn-outline-success">Atendido</a>
-                        </td>
-                    </tr>
+                    
+                    <?php  foreach($citas as $cita): ?>
+                        <tr>
+                            <td><?php echo $cita->getId()?></td>
+                            <td><?php echo $cita->getPacientes()->getNombreP()?></td>
+                            <td><?php echo $cita->getPacientes()->getApellidoP()?></td>
+                            <td><?php $fecha=new Carbon($cita->getFecha()); echo  $fecha->format('d/m/Y')?></td>
+                            <td><?php $hora=new Carbon($cita->getHora()); echo $hora->format('H:i');?></td>
+                            <td><?php echo $cita->getMedicos()->getNombre()?></td>
+                            <td><?php echo $cita->getMedicos()->getEspecialidad()?></td>
+                            <td><?php $status= $cita->getEstatus(); echo $status == 1 ? 'Atendido' : 'Sin Atender' ?></td>
+                            <td>
+                                <a href="#" class="btn btn-primary"><i class="fa-solid fa-file-pen"></i></a>
+                                <a href="#" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                                <?php $status == 1 ? 'disabled':'' ;
+                                if($status == 0):?>
+                                <a href="#" class="btn btn-success"><i class="fa-solid fa-check-to-slot"></i></a>
+                                <?php endif;?>
+                            </td>
+
+                        </tr>
+                    <?php  endforeach?>
                         
                 </tbody>
             </table>
         </div>
     </div>
+                                   
+    <?php require '../admin/paginacion.php'?>
 </div>
 
 

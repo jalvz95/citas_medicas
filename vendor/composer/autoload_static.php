@@ -15,6 +15,7 @@ class ComposerStaticInit63449bd76dce11a321dbb854322e2271
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
         'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
+        '3917c79c5052b270641b5a200963dbc2' => __DIR__ . '/..' . '/kint-php/kint/init.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -41,6 +42,10 @@ class ComposerStaticInit63449bd76dce11a321dbb854322e2271
             'Psr\\Log\\' => 8,
             'Psr\\Container\\' => 14,
             'Propel\\' => 7,
+        ),
+        'K' => 
+        array (
+            'Kint\\' => 5,
         ),
         'C' => 
         array (
@@ -120,6 +125,10 @@ class ComposerStaticInit63449bd76dce11a321dbb854322e2271
         'Propel\\' => 
         array (
             0 => __DIR__ . '/..' . '/propel/propel/src/Propel',
+        ),
+        'Kint\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kint-php/kint/src',
         ),
         'Carbon\\' => 
         array (
