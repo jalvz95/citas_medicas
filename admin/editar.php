@@ -5,7 +5,7 @@ use DB\Base\PacientesQuery;
 use DB\Citas;
 use DB\Pacientes;
 
-require '../index.php';
+require '../paquetes.php';
 
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){

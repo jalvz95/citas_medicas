@@ -4,6 +4,7 @@ use DB\Base\CitasQuery;
 use DB\Base\MedicosQuery;
 use DB\Base\PacientesQuery;
 
+
 function limpiarDatos($datos){
     $datos = trim($datos);
     $datos = stripslashes($datos);
@@ -40,8 +41,8 @@ function obternerPacientes(){
 }
 
 function cantidad_paginas(){
-    $total_post = CitasQuery::create()->count();
-    $numero_paginas = ceil($total_post / 5);
+    $total_citas = CitasQuery::create()->count();
+    $numero_paginas = ceil($total_citas / 5);
     return $numero_paginas;
 }
 
@@ -53,5 +54,21 @@ function id_cita($id){
     ->findOneById($id);
     
 }
+ function cantidad_paginas_medicos(){
+    $total_doctores= MedicosQuery::create()->count();
+    $numero_paginas= ceil($total_doctores/5);
+    return $numero_paginas;
 
+ }
+
+ function obtenerListaMedicos(){
+    $inicio = (pagina_actual() > 1) ? pagina_actual() * 5 - 5 : 0;
+   $listaMedicos= MedicosQuery::create()
+   ->orderByEstatus('ASC')
+   ->orderByNombre('ASC')
+   ->limit(5)
+   ->offset($inicio)
+   ->find();
+   return $listaMedicos;
+}
 ?>

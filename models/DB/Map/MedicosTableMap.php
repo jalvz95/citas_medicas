@@ -63,7 +63,7 @@ class MedicosTableMap extends TableMap
     /**
      * The total number of columns
      */
-    public const NUM_COLUMNS = 3;
+    public const NUM_COLUMNS = 4;
 
     /**
      * The number of lazy-loaded columns
@@ -73,7 +73,7 @@ class MedicosTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    public const NUM_HYDRATE_COLUMNS = 3;
+    public const NUM_HYDRATE_COLUMNS = 4;
 
     /**
      * the column name for the ID field
@@ -91,6 +91,11 @@ class MedicosTableMap extends TableMap
     public const COL_ESPECIALIDAD = 'medicos.especialidad';
 
     /**
+     * the column name for the estatus field
+     */
+    public const COL_ESTATUS = 'medicos.estatus';
+
+    /**
      * The default string format for model objects of the related table
      */
     public const DEFAULT_STRING_FORMAT = 'YAML';
@@ -104,11 +109,11 @@ class MedicosTableMap extends TableMap
      * @var array<string, mixed>
      */
     protected static $fieldNames = [
-        self::TYPE_PHPNAME       => ['Id', 'Nombre', 'Especialidad', ],
-        self::TYPE_CAMELNAME     => ['id', 'nombre', 'especialidad', ],
-        self::TYPE_COLNAME       => [MedicosTableMap::COL_ID, MedicosTableMap::COL_NOMBRE, MedicosTableMap::COL_ESPECIALIDAD, ],
-        self::TYPE_FIELDNAME     => ['ID', 'nombre', 'especialidad', ],
-        self::TYPE_NUM           => [0, 1, 2, ]
+        self::TYPE_PHPNAME       => ['Id', 'Nombre', 'Especialidad', 'Estatus', ],
+        self::TYPE_CAMELNAME     => ['id', 'nombre', 'especialidad', 'estatus', ],
+        self::TYPE_COLNAME       => [MedicosTableMap::COL_ID, MedicosTableMap::COL_NOMBRE, MedicosTableMap::COL_ESPECIALIDAD, MedicosTableMap::COL_ESTATUS, ],
+        self::TYPE_FIELDNAME     => ['ID', 'nombre', 'especialidad', 'estatus', ],
+        self::TYPE_NUM           => [0, 1, 2, 3, ]
     ];
 
     /**
@@ -120,11 +125,11 @@ class MedicosTableMap extends TableMap
      * @var array<string, mixed>
      */
     protected static $fieldKeys = [
-        self::TYPE_PHPNAME       => ['Id' => 0, 'Nombre' => 1, 'Especialidad' => 2, ],
-        self::TYPE_CAMELNAME     => ['id' => 0, 'nombre' => 1, 'especialidad' => 2, ],
-        self::TYPE_COLNAME       => [MedicosTableMap::COL_ID => 0, MedicosTableMap::COL_NOMBRE => 1, MedicosTableMap::COL_ESPECIALIDAD => 2, ],
-        self::TYPE_FIELDNAME     => ['ID' => 0, 'nombre' => 1, 'especialidad' => 2, ],
-        self::TYPE_NUM           => [0, 1, 2, ]
+        self::TYPE_PHPNAME       => ['Id' => 0, 'Nombre' => 1, 'Especialidad' => 2, 'Estatus' => 3, ],
+        self::TYPE_CAMELNAME     => ['id' => 0, 'nombre' => 1, 'especialidad' => 2, 'estatus' => 3, ],
+        self::TYPE_COLNAME       => [MedicosTableMap::COL_ID => 0, MedicosTableMap::COL_NOMBRE => 1, MedicosTableMap::COL_ESPECIALIDAD => 2, MedicosTableMap::COL_ESTATUS => 3, ],
+        self::TYPE_FIELDNAME     => ['ID' => 0, 'nombre' => 1, 'especialidad' => 2, 'estatus' => 3, ],
+        self::TYPE_NUM           => [0, 1, 2, 3, ]
     ];
 
     /**
@@ -153,6 +158,12 @@ class MedicosTableMap extends TableMap
         'medicos.especialidad' => 'ESPECIALIDAD',
         'MedicosTableMap::COL_ESPECIALIDAD' => 'ESPECIALIDAD',
         'COL_ESPECIALIDAD' => 'ESPECIALIDAD',
+        'Estatus' => 'ESTATUS',
+        'Medicos.Estatus' => 'ESTATUS',
+        'estatus' => 'ESTATUS',
+        'medicos.estatus' => 'ESTATUS',
+        'MedicosTableMap::COL_ESTATUS' => 'ESTATUS',
+        'COL_ESTATUS' => 'ESTATUS',
     ];
 
     /**
@@ -175,6 +186,7 @@ class MedicosTableMap extends TableMap
         $this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
         $this->addColumn('nombre', 'Nombre', 'VARCHAR', true, 50, null);
         $this->addColumn('especialidad', 'Especialidad', 'VARCHAR', true, 50, null);
+        $this->addColumn('estatus', 'Estatus', 'INTEGER', true, null, 0);
     }
 
     /**
@@ -338,10 +350,12 @@ class MedicosTableMap extends TableMap
             $criteria->addSelectColumn(MedicosTableMap::COL_ID);
             $criteria->addSelectColumn(MedicosTableMap::COL_NOMBRE);
             $criteria->addSelectColumn(MedicosTableMap::COL_ESPECIALIDAD);
+            $criteria->addSelectColumn(MedicosTableMap::COL_ESTATUS);
         } else {
             $criteria->addSelectColumn($alias . '.ID');
             $criteria->addSelectColumn($alias . '.nombre');
             $criteria->addSelectColumn($alias . '.especialidad');
+            $criteria->addSelectColumn($alias . '.estatus');
         }
     }
 
@@ -363,10 +377,12 @@ class MedicosTableMap extends TableMap
             $criteria->removeSelectColumn(MedicosTableMap::COL_ID);
             $criteria->removeSelectColumn(MedicosTableMap::COL_NOMBRE);
             $criteria->removeSelectColumn(MedicosTableMap::COL_ESPECIALIDAD);
+            $criteria->removeSelectColumn(MedicosTableMap::COL_ESTATUS);
         } else {
             $criteria->removeSelectColumn($alias . '.ID');
             $criteria->removeSelectColumn($alias . '.nombre');
             $criteria->removeSelectColumn($alias . '.especialidad');
+            $criteria->removeSelectColumn($alias . '.estatus');
         }
     }
 

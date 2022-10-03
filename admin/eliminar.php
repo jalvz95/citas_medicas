@@ -1,6 +1,6 @@
 <?php
 
-require '../index.php';
+require '../paquetes.php';
 use DB\Base\CitasQuery;
 
 $id=limpiarDatos($_GET['id']);

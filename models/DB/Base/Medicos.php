@@ -88,6 +88,14 @@ abstract class Medicos implements ActiveRecordInterface
     protected $especialidad;
 
     /**
+     * The value for the estatus field.
+     *
+     * Note: this column has a database default value of: 0
+     * @var        int
+     */
+    protected $estatus;
+
+    /**
      * @var        ObjectCollection|ChildCitas[] Collection to store aggregation of ChildCitas objects.
      * @phpstan-var ObjectCollection&\Traversable<ChildCitas> Collection to store aggregation of ChildCitas objects.
      */
@@ -110,10 +118,23 @@ abstract class Medicos implements ActiveRecordInterface
     protected $citassScheduledForDeletion = null;
 
     /**
+     * Applies default values to this object.
+     * This method should be called from the object's constructor (or
+     * equivalent initialization method).
+     * @see __construct()
+     */
+    public function applyDefaultValues(): void
+    {
+        $this->estatus = 0;
+    }
+
+    /**
      * Initializes internal state of DB\Base\Medicos object.
+     * @see applyDefaults()
      */
     public function __construct()
     {
+        $this->applyDefaultValues();
     }
 
     /**
@@ -366,6 +387,16 @@ abstract class Medicos implements ActiveRecordInterface
     }
 
     /**
+     * Get the [estatus] column value.
+     *
+     * @return int
+     */
+    public function getEstatus()
+    {
+        return $this->estatus;
+    }
+
+    /**
      * Set the value of [id] column.
      *
      * @param int $v New value
@@ -426,6 +457,26 @@ abstract class Medicos implements ActiveRecordInterface
     }
 
     /**
+     * Set the value of [estatus] column.
+     *
+     * @param int $v New value
+     * @return $this The current object (for fluent API support)
+     */
+    public function setEstatus($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->estatus !== $v) {
+            $this->estatus = $v;
+            $this->modifiedColumns[MedicosTableMap::COL_ESTATUS] = true;
+        }
+
+        return $this;
+    }
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -435,6 +486,10 @@ abstract class Medicos implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues(): bool
     {
+            if ($this->estatus !== 0) {
+                return false;
+            }
+
         // otherwise, everything was equal, so return TRUE
         return true;
     }
@@ -469,6 +524,9 @@ abstract class Medicos implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : MedicosTableMap::translateFieldName('Especialidad', TableMap::TYPE_PHPNAME, $indexType)];
             $this->especialidad = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : MedicosTableMap::translateFieldName('Estatus', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->estatus = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -477,7 +535,7 @@ abstract class Medicos implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 3; // 3 = MedicosTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 4; // 4 = MedicosTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\DB\\Medicos'), 0, $e);
@@ -707,6 +765,9 @@ abstract class Medicos implements ActiveRecordInterface
         if ($this->isColumnModified(MedicosTableMap::COL_ESPECIALIDAD)) {
             $modifiedColumns[':p' . $index++]  = 'especialidad';
         }
+        if ($this->isColumnModified(MedicosTableMap::COL_ESTATUS)) {
+            $modifiedColumns[':p' . $index++]  = 'estatus';
+        }
 
         $sql = sprintf(
             'INSERT INTO medicos (%s) VALUES (%s)',
@@ -726,6 +787,9 @@ abstract class Medicos implements ActiveRecordInterface
                         break;
                     case 'especialidad':
                         $stmt->bindValue($identifier, $this->especialidad, PDO::PARAM_STR);
+                        break;
+                    case 'estatus':
+                        $stmt->bindValue($identifier, $this->estatus, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -798,6 +862,9 @@ abstract class Medicos implements ActiveRecordInterface
             case 2:
                 return $this->getEspecialidad();
 
+            case 3:
+                return $this->getEstatus();
+
             default:
                 return null;
         } // switch()
@@ -829,6 +896,7 @@ abstract class Medicos implements ActiveRecordInterface
             $keys[0] => $this->getId(),
             $keys[1] => $this->getNombre(),
             $keys[2] => $this->getEspecialidad(),
+            $keys[3] => $this->getEstatus(),
         ];
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -896,6 +964,9 @@ abstract class Medicos implements ActiveRecordInterface
             case 2:
                 $this->setEspecialidad($value);
                 break;
+            case 3:
+                $this->setEstatus($value);
+                break;
         } // switch()
 
         return $this;
@@ -930,6 +1001,9 @@ abstract class Medicos implements ActiveRecordInterface
         }
         if (array_key_exists($keys[2], $arr)) {
             $this->setEspecialidad($arr[$keys[2]]);
+        }
+        if (array_key_exists($keys[3], $arr)) {
+            $this->setEstatus($arr[$keys[3]]);
         }
 
         return $this;
@@ -982,6 +1056,9 @@ abstract class Medicos implements ActiveRecordInterface
         }
         if ($this->isColumnModified(MedicosTableMap::COL_ESPECIALIDAD)) {
             $criteria->add(MedicosTableMap::COL_ESPECIALIDAD, $this->especialidad);
+        }
+        if ($this->isColumnModified(MedicosTableMap::COL_ESTATUS)) {
+            $criteria->add(MedicosTableMap::COL_ESTATUS, $this->estatus);
         }
 
         return $criteria;
@@ -1073,6 +1150,7 @@ abstract class Medicos implements ActiveRecordInterface
     {
         $copyObj->setNombre($this->getNombre());
         $copyObj->setEspecialidad($this->getEspecialidad());
+        $copyObj->setEstatus($this->getEstatus());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -1409,8 +1487,10 @@ abstract class Medicos implements ActiveRecordInterface
         $this->id = null;
         $this->nombre = null;
         $this->especialidad = null;
+        $this->estatus = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
+        $this->applyDefaultValues();
         $this->resetModified();
         $this->setNew(true);
         $this->setDeleted(false);

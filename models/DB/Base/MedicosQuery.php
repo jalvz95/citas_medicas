@@ -24,10 +24,12 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMedicosQuery orderById($order = Criteria::ASC) Order by the ID column
  * @method     ChildMedicosQuery orderByNombre($order = Criteria::ASC) Order by the nombre column
  * @method     ChildMedicosQuery orderByEspecialidad($order = Criteria::ASC) Order by the especialidad column
+ * @method     ChildMedicosQuery orderByEstatus($order = Criteria::ASC) Order by the estatus column
  *
  * @method     ChildMedicosQuery groupById() Group by the ID column
  * @method     ChildMedicosQuery groupByNombre() Group by the nombre column
  * @method     ChildMedicosQuery groupByEspecialidad() Group by the especialidad column
+ * @method     ChildMedicosQuery groupByEstatus() Group by the estatus column
  *
  * @method     ChildMedicosQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildMedicosQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -54,7 +56,8 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildMedicos|null findOneById(int $ID) Return the first ChildMedicos filtered by the ID column
  * @method     ChildMedicos|null findOneByNombre(string $nombre) Return the first ChildMedicos filtered by the nombre column
- * @method     ChildMedicos|null findOneByEspecialidad(string $especialidad) Return the first ChildMedicos filtered by the especialidad column *
+ * @method     ChildMedicos|null findOneByEspecialidad(string $especialidad) Return the first ChildMedicos filtered by the especialidad column
+ * @method     ChildMedicos|null findOneByEstatus(int $estatus) Return the first ChildMedicos filtered by the estatus column *
 
  * @method     ChildMedicos requirePk($key, ?ConnectionInterface $con = null) Return the ChildMedicos by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildMedicos requireOne(?ConnectionInterface $con = null) Return the first ChildMedicos matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -62,6 +65,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMedicos requireOneById(int $ID) Return the first ChildMedicos filtered by the ID column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildMedicos requireOneByNombre(string $nombre) Return the first ChildMedicos filtered by the nombre column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildMedicos requireOneByEspecialidad(string $especialidad) Return the first ChildMedicos filtered by the especialidad column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildMedicos requireOneByEstatus(int $estatus) Return the first ChildMedicos filtered by the estatus column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildMedicos[]|Collection find(?ConnectionInterface $con = null) Return ChildMedicos objects based on current ModelCriteria
  * @psalm-method Collection&\Traversable<ChildMedicos> find(?ConnectionInterface $con = null) Return ChildMedicos objects based on current ModelCriteria
@@ -71,6 +75,8 @@ use Propel\Runtime\Exception\PropelException;
  * @psalm-method Collection&\Traversable<ChildMedicos> findByNombre(string $nombre) Return ChildMedicos objects filtered by the nombre column
  * @method     ChildMedicos[]|Collection findByEspecialidad(string $especialidad) Return ChildMedicos objects filtered by the especialidad column
  * @psalm-method Collection&\Traversable<ChildMedicos> findByEspecialidad(string $especialidad) Return ChildMedicos objects filtered by the especialidad column
+ * @method     ChildMedicos[]|Collection findByEstatus(int $estatus) Return ChildMedicos objects filtered by the estatus column
+ * @psalm-method Collection&\Traversable<ChildMedicos> findByEstatus(int $estatus) Return ChildMedicos objects filtered by the estatus column
  * @method     ChildMedicos[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ?ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  * @psalm-method \Propel\Runtime\Util\PropelModelPager&\Traversable<ChildMedicos> paginate($page = 1, $maxPerPage = 10, ?ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
@@ -170,7 +176,7 @@ abstract class MedicosQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT ID, nombre, especialidad FROM medicos WHERE ID = :p0';
+        $sql = 'SELECT ID, nombre, especialidad, estatus FROM medicos WHERE ID = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -359,6 +365,49 @@ abstract class MedicosQuery extends ModelCriteria
         }
 
         $this->addUsingAlias(MedicosTableMap::COL_ESPECIALIDAD, $especialidad, $comparison);
+
+        return $this;
+    }
+
+    /**
+     * Filter the query on the estatus column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByEstatus(1234); // WHERE estatus = 1234
+     * $query->filterByEstatus(array(12, 34)); // WHERE estatus IN (12, 34)
+     * $query->filterByEstatus(array('min' => 12)); // WHERE estatus > 12
+     * </code>
+     *
+     * @param mixed $estatus The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param string|null $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this The current query, for fluid interface
+     */
+    public function filterByEstatus($estatus = null, ?string $comparison = null)
+    {
+        if (is_array($estatus)) {
+            $useMinMax = false;
+            if (isset($estatus['min'])) {
+                $this->addUsingAlias(MedicosTableMap::COL_ESTATUS, $estatus['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($estatus['max'])) {
+                $this->addUsingAlias(MedicosTableMap::COL_ESTATUS, $estatus['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        $this->addUsingAlias(MedicosTableMap::COL_ESTATUS, $estatus, $comparison);
 
         return $this;
     }

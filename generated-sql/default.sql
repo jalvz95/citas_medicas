@@ -43,6 +43,7 @@ CREATE TABLE `medicos`
     `ID` INTEGER NOT NULL AUTO_INCREMENT,
     `nombre` VARCHAR(50) NOT NULL,
     `especialidad` VARCHAR(50) NOT NULL,
+    `estatus` INTEGER DEFAULT 0 NOT NULL,
     PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB;
 

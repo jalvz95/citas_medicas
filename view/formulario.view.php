@@ -1,4 +1,6 @@
-<?php require 'header.php'?>
+<?php require 'header.php';
+use Carbon\Carbon;
+?>
 
 
 <div class="container">
@@ -18,13 +20,13 @@
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label for="nombre">Nombre</label>
-                                <input required type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre">
+                                <input required type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre" value="<?php if(!empty($nombre)){echo $nombre;} ?>">
                             </div>
                         </div>
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label for="apellido">Apellido</label>
-                                <input required type="text" name="apellido" class="form-control" id="apellido" placeholder="Apellido">
+                                <input required type="text" name="apellido" class="form-control" id="apellido" placeholder="Apellido" value="<?php if(!empty($apellido)){echo $apellido;} ?>">
                             </div>
                         </div>
                     </div>
@@ -36,13 +38,13 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for="nombre">Hora</label>
-                                <input required type="time" name="hora" class="form-control" id="hora" placeholder="hora">
+                                <input required type="time" name="hora" class="form-control" id="hora" placeholder="hora" value="<?php if(!empty($hora)){$hora=new Carbon($hora); echo $hora->format('H:i');} ?>">
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for="nombre">Fecha</label>
-                                <input required type="date" name="fecha" class="form-control" id="fecha" placeholder="Fecha">
+                                <input required type="date" name="fecha" class="form-control" id="fecha" placeholder="Fecha" value="<?php if(!empty($fecha)){echo $fecha;} ?>">
                             </div>
                         </div>
                         <div class="col-md-5">

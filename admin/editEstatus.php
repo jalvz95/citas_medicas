@@ -2,7 +2,7 @@
 
 use DB\Base\CitasQuery;
 
-require '../index.php';
+require '../paquetes.php';
 
 $id=limpiarDatos($_GET['id']);
 $editar=CitasQuery::create()

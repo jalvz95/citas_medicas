@@ -3,12 +3,12 @@
 use DB\Citas;
 use DB\Pacientes;
 
-require '../index.php';
+require '../paquetes.php';
 
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $nombre= limpiarDatos($_POST['nombre']);
-    $apellido= limpiarDatos($_POST['apellido']);
+    $nombre= strtoupper(limpiarDatos($_POST['nombre']));
+    $apellido= strtoupper(limpiarDatos($_POST['apellido']));
     $hora= limpiarDatos($_POST['hora']);
     $fecha= limpiarDatos($_POST['fecha']);
 
